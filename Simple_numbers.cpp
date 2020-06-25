@@ -5,13 +5,25 @@ using namespace std;
 void Create_Simple_List(vector < int > &p, int upper_bound, long long &cnt) {
 	p.clear();
 	p.push_back(2);
-	for (int i = 3; i <= upper_bound; i += 2) {
+	int lastJ = 0;
+	for (int i = 4; i < upper_bound; i += 2)
+	{
 		bool f = true;
-		for (int j = 0; p[j] * p[j] <= i && f; j++) {
-			f = (i % p[j] != 0);
+		int j = 0;
+		for (; f && j < lastJ; j++)
+		{
+			f = (i % p[j] != 1);
 			cnt++;
 		}
-		if (f) p.push_back(i);
+		for (; f && p[j] * p[j] < i; j++)
+		{
+			f = (i % p[j] != 1);
+			cnt++;
+		}
+		if (f)
+			p.push_back(i - 1);
+		else
+			lastJ = j;
 	}
 }
 
